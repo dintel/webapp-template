@@ -1,0 +1,17 @@
+{
+    "name": "dintel/skeleton-application",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "skeleton",
+        "template",
+        "zf2"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.5",
+        "zendframework/zendframework": "2.3.*",
+        "aws/aws-sdk-php": "*",
+        "ccampbell/chromephp": "dev-master"
+    }
+}

@@ -1,0 +1,93 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle("Template")->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+                    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/png', 'href' => $this->basePath() . '/img/favicon.png'))
+                    ->prependStylesheet($this->basePath() . '/css/prettify.css')
+                    ->prependStylesheet($this->basePath() . '/css/style.css')
+                    ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                    ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css');
+    ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+                    ->prependFile($this->basePath() . '/js/dataTable.js')
+                    ->prependFile($this->basePath() . '/js/dataButton.js')
+                    ->prependFile($this->basePath() . '/js/common.js')
+                    ->prependFile($this->basePath() . '/js/prettify.js')
+                    ->prependFile($this->basePath() . '/js/jquery.jsonrpcclient.js')
+                    ->prependFile($this->basePath() . '/js/jquery.bootstrap-growl.min.js')
+                    ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                    ->prependFile($this->basePath() . '/js/jquery.min.js')
+                    ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                    ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); 
+    ?>
+    <!-- <script src="http://www.fuelcdn.com/fuelux/2.6.1/loader.min.js" type="text/javascript"></script> -->
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="<?= $this->url('home') ?>"><i class="glyphicon glyphicon-home"></i> Template</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <?php if(isset($this->user)) { ?>
+          <ul class="nav navbar-nav">
+            <li class="<?=$this->controller == 'some' ? 'active':''?>"><a href="<?=$this->url('application/default',['controller' => 'some', 'action' => 'index'])?>"><i class="glyphicon glyphicon-time"></i> Some module</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">Hello, <?=$this->user['name']?></p></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> System <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'index'])?>"><i class="glyphicon glyphicon-user"></i> Users management</a></li>
+                <li class="divider"></li>
+                <li><a href="<?=$this->url('application/default',['controller' => 'index', 'action' => 'stats'])?>"><i class="glyphicon glyphicon-stats"></i> Stats</a></li>
+              </ul>
+            </li>
+            <li><a href="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'logout'])?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+          </ul>
+          <?php } ?>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <?= $this->content; ?>
+      <hr>
+      <footer>
+        <p>&copy; 2005 - <?= date('Y') ?> by Zend Technologies Ltd. All rights reserved.</p>
+      </footer>
+    </div> <!-- /container -->
+    <div id="messages" class="hidden">
+    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_INFO); ?>
+    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_ERROR); ?>
+    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_SUCCESS); ?>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("div#messages ul").each(function(){
+            type = $(this).attr('class');
+            $('li',this).each(function(){
+                msg(type,$(this).text());
+            })
+
+        });
+    });
+    </script>
+    <?= $this->inlineScript() ?>
+  </body>
+</html>
