@@ -9,11 +9,26 @@
 
 namespace Application\Controller;
 
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    protected $mapper;
+
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+        $this->init();
+        return $this;
+    }
+
+    protected function init()
+    {
+        $this->mapper = $this->getServiceLocator()->get('mapper');
+    }
+
     public function indexAction()
     {
         return new ViewModel();

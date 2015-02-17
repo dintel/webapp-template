@@ -20,18 +20,16 @@
     <!-- Scripts -->
     <?php echo $this->headScript()
                     ->prependFile($this->basePath() . '/js/dataTable.js')
+                    ->prependFile($this->basePath() . '/js/dataSelect.js')
                     ->prependFile($this->basePath() . '/js/dataButton.js')
                     ->prependFile($this->basePath() . '/js/common.js')
                     ->prependFile($this->basePath() . '/js/prettify.js')
-                    ->prependFile($this->basePath() . '/js/jquery.jsonrpcclient.js')
                     ->prependFile($this->basePath() . '/js/jquery.bootstrap-growl.min.js')
                     ->prependFile($this->basePath() . '/js/bootstrap.min.js')
                     ->prependFile($this->basePath() . '/js/jquery.min.js')
                     ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                     ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); 
     ?>
-    <!-- <script src="http://www.fuelcdn.com/fuelux/2.6.1/loader.min.js" type="text/javascript"></script> -->
-
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -73,9 +71,9 @@
       </footer>
     </div> <!-- /container -->
     <div id="messages" class="hidden">
-    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_INFO); ?>
-    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_ERROR); ?>
-    <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_SUCCESS); ?>
+      <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_INFO); ?>
+      <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_ERROR); ?>
+      <?= $this->plugin('flashMessenger')->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_SUCCESS); ?>
     </div>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -84,7 +82,6 @@
             $('li',this).each(function(){
                 msg(type,$(this).text());
             })
-
         });
     });
     </script>

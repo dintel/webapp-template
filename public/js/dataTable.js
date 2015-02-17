@@ -10,12 +10,12 @@
             var checkboxClass = this.data("checkboxClass");
             var convertRowFuncName = this.data('tableConvertRowFunc');
             var options = {};
-            
+
             if(params === undefined) {
                 this.data("params",{});
                 params = {};
             }
-            
+
             if(checkboxClass === undefined) {
                 this.data("checkboxClass","");
             }
@@ -29,23 +29,24 @@
             options.checkboxClass = checkboxClass;
 
             this.data("options",$.extend({},$.fn.dataTable.defaults,options));
-            
+
             return this.dataTable("refresh");
         }
-        
+
         if(action === "refresh") {
             var table = this;
             var tbody = $("tbody:first",this);
             var options = this.data("options");
 
-            tbody.empty();
-
             table.data("data",data);
+            tbody.empty();
+            $('<tr class="info"><td class="text-center" colspan="'+$("th",table).length+'">Loading...</td></tr>').appendTo(tbody);
 
             $.post(options.url,options.params,function(json){
                 if('message' in json) {
                     msg(json.message.type,json.message.text);
                 } else {
+                    tbody.empty();
                     $.each(json.result,function(i,rawRow){
                         var row = options.convertRowFunc(rawRow);
                         if("checkboxClass" in options) {
@@ -68,7 +69,7 @@
                 console.error(err);
                 msg("error",err);
             });
-            
+
             return this;
         }
 
@@ -87,7 +88,7 @@
     };
 
     $.fn.dataTable.defaults = {
-        convertRowFunc: function(row) {row.cells = $.map(row.cells,function(c){return $('<td></td>').text(c);});return row;},
+        convertRowFunc: function(row) {row.cells = $.map(row.cells,function(c){return $('<td></td>').text(c);});return row;}
     };
 }(jQuery));
 

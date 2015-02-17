@@ -9,27 +9,27 @@ use IteratorAggregate;
 class Response implements IteratorAggregate
 {
     private $data;
-    
-    public function __construct($result,Message $msg = null)
+
+    public function __construct($result, Message $msg = null)
     {
         $this->data = array();
-        
-        if($result !== null) {
+
+        if ($result !== null) {
             $this->data['result'] = $result;
         }
-        
-        if($msg !== null) {
+
+        if ($msg !== null) {
             $this->data['message'] = $msg;
         }
     }
-    
+
     public function getIterator()
     {
         return new ArrayIterator($this->data);
     }
 
-    public static function model($result,Message $msg = null)
+    public static function model($result, Message $msg = null)
     {
-        return new JsonModel(new Response($result,$msg));
+        return new JsonModel(new Response($result, $msg));
     }
 }

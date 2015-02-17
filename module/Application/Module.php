@@ -10,7 +10,6 @@
 namespace Application;
 
 use Zend\Log\Logger;
-use Zend\Log\Writer\ChromePhp as ChromePhpLogWriter;
 use Zend\Log\Writer\Stream as StreamLogWriter;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -29,7 +28,7 @@ class Module
 
         /* Initialize services */
         $this->initServices($e->getApplication()->getServiceManager());
-        
+
         /* Add MVC events custom handlers */
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_ROUTE,[$this,'onRoute']);
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH,[$this,'onDispatch']);
@@ -39,13 +38,11 @@ class Module
     {
         // Initialize log service
         $logger = new Logger();
-        $writer = new ChromePhpLogWriter();
-        $logger->addWriter($writer);
         $writer = new StreamLogWriter(__DIR__.'/../../data/log/template.log');
         $logger->addWriter($writer);
         Logger::registerErrorHandler($logger);
         $sm->setService('log',$logger);
-        
+
         // Initialize authentication service
         $mongodb = $sm->get('mongodb');
         $authAdapter = new AuthAdapter($mongodb->users);
@@ -53,7 +50,7 @@ class Module
         $auth->setAdapter($authAdapter);
         $sm->setService('auth',$auth);
     }
-    
+
     public function onRoute(MvcEvent $e)
     {
         $match = $e->getRouteMatch();
@@ -82,7 +79,7 @@ class Module
         }
         return false;
     }
-    
+
     public function onDispatch(MvcEvent $e)
     {
     }

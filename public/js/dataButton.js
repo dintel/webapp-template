@@ -10,7 +10,7 @@
             var prepare = this.data('prepare');
             var callback = this.data('callback');
             var options = {};
-            
+
             if(params === undefined) {
                 this.data("params",{});
             }
@@ -27,17 +27,17 @@
 
             this.data("options",$.extend({},$.fn.dataButton.defaults,options));
             this.click(function(e){ $(this).dataButton('call'); });
-            
+
             return this;
         }
-        
+
         if(action === "call") {
             var button = this;
             var options = this.data("options");
             var params = {};
 
             options.button = button;
-            
+
             if(options.prepare()) {
                 if(typeof options.params === 'object') {
                     for(var prop in options.params) {
@@ -48,7 +48,7 @@
                         }
                     }
                 }
-                
+
                 $.post(options.url,params,function(json){
                     if('message' in json) {
                         msg(json.message.type,json.message.text);
@@ -64,7 +64,7 @@
                     msg("error",err);
                 });
             }
-            
+
             return this;
         }
 

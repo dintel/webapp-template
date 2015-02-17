@@ -17,24 +17,24 @@ class Ec2 implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
         $config = $services->get('Config');
-        if(!isset($config['ec2'])) {
+        if (!isset($config['ec2'])) {
             throw new \Exception('AWS EC2 configuration not found');
         }
         $this->config = $config['ec2'];
         $this->log = $services->get('log');
         $this->ec2 = Ec2Client::factory($this->config);
-        $this->ec2->addSubscriber(LogPlugin::getDebugPlugin(true,fopen(__DIR__."/../../../../../var/log/ec2.log",'a')));
+        $this->ec2->addSubscriber(LogPlugin::getDebugPlugin(true, fopen(__DIR__."/../../../../../data/log/ec2.log", 'a')));
         $this->key = $this->config['key'];
         $this->secret = $this->config['secret'];
         $this->lastError = "";
         $this->log->debug("Initialized EC2 client");
         return $this;
     }
-    
-    public function shareAmi($ami,array $accounts)
+
+    public function shareAmi($ami, array $accounts)
     {
         $add = array();
-        foreach($accounts as $acc) {
+        foreach ($accounts as $acc) {
             $add[] = [ 'UserId' => $acc ];
         }
 
@@ -52,12 +52,12 @@ class Ec2 implements FactoryInterface
                     'Add' => $add,
                 ],
             ]);
-        } catch(Aws\Ec2\Exception\Ec2Exception $e) {
+        } catch (Aws\Ec2\Exception\Ec2Exception $e) {
             $this->log->debug("AWS EC2 Exception: $e");
         }
         return $kernelId;
     }
-    
+
     public function deleteAmi($ami)
     {
         try {
@@ -65,7 +65,7 @@ class Ec2 implements FactoryInterface
             $snapshotId = $result['Images'][0]['BlockDeviceMappings'][0]['Ebs']['SnapshotId'];
             $this->ec2->deregisterImage(['ImageId' => $ami]);
             $this->ec2->deleteSnapshot(['SnapshotId' => $snapshotId]);
-        } catch(\Aws\Ec2\Exception\Ec2Exception $e) {
+        } catch (\Aws\Ec2\Exception\Ec2Exception $e) {
             $this->log->debug("AWS EC2 Exception: $e");
         }
     }
@@ -75,12 +75,12 @@ class Ec2 implements FactoryInterface
         try {
             $result = $this->ec2->describeImages(['ImageIds' => [$ami]]);
             return $result['Images'][0]['Name'];
-        } catch(\Aws\Ec2\Exception\Ec2Exception $e) {
+        } catch (\Aws\Ec2\Exception\Ec2Exception $e) {
             $this->log->debug("AWS EC2 Exception: $e");
         }
     }
-    
-    public function findAmiByPidAndName($pid,$name)
+
+    public function findAmiByPidAndName($pid, $name)
     {
         $regions = [
             Region::US_EAST_1,
@@ -98,17 +98,17 @@ class Ec2 implements FactoryInterface
         $length = strlen($name);
         $result = array();
 
-        $this->ec2->addSubscriber(LogPlugin::getDebugPlugin(true,$this->log));
-        foreach($regions as $region) {
+        $this->ec2->addSubscriber(LogPlugin::getDebugPlugin(true, $this->log));
+        foreach ($regions as $region) {
             $ec2 = Ec2Client::factory(['region' => $region, 'scheme' => 'http', 'key' => $this->key, 'secret' => $this->secret]);
             try {
                 $ec2Result = $ec2->describeImages(['Filters' => $filters]);
                 $this->log->debug(count($ec2Result['Images']). ' images fetched');
-                foreach($ec2Result['Images'] as $image) {
-                    if(strncmp($name,$image['Name'],$length) === 0)
+                foreach ($ec2Result['Images'] as $image) {
+                    if (strncmp($name, $image['Name'], $length) === 0)
                         $result[$region] = $image['ImageId'];
                 }
-            } catch(\Aws\Ec2\Exception\Ec2Exception $e) {
+            } catch (\Aws\Ec2\Exception\Ec2Exception $e) {
                 $this->log->debug("AWS EC2 Exception: $e");
             }
         }
@@ -119,18 +119,18 @@ class Ec2 implements FactoryInterface
     public function getInstances(array $tags, array $amis = null)
     {
         $filters = [ ['Name' => 'tag-key', 'Values' => $tags, ['Name' => 'tag-value', 'Values' => ['true']] ];
-        if($amis !== null) {
+        if ($amis !== null) {
             $filters[] = ['Name' => 'image-id', 'Values' => $amis];
         }
         $result = [];
 
         try {
             $reservations = $this->ec2->describeInstances(['Filters' => $filters]);
-            foreach($reservations['Reservations'] as $reservation) {
-                foreach($reservation['Instances'] as $instance) {
+            foreach ($reservations['Reservations'] as $reservation) {
+                foreach ($reservation['Instances'] as $instance) {
                     $name = "";
-                    foreach($instance['Tags'] as $tag) {
-                        if($tag['Key'] == 'Name') {
+                    foreach ($instance['Tags'] as $tag) {
+                        if ($tag['Key'] == 'Name') {
                             $name = $tag['Value'];
                         }
                     }
@@ -143,15 +143,15 @@ class Ec2 implements FactoryInterface
                     ];
                 }
             }
-        } catch(Aws\Ec2\Exception\Ec2Exception $e) {
+        } catch (Aws\Ec2\Exception\Ec2Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
         }
-            
+
         return $result;
     }
 
-    public function runInstance($ami,$name,array $tags = null)
+    public function runInstance($ami, $name, array $tags = null)
     {
         try {
             $result = $this->ec2->runInstances([
@@ -163,8 +163,8 @@ class Ec2 implements FactoryInterface
                 'InstanceType' => $this->config['instance_type'],
             ]);
             $instanceId = $result['Instances'][0]['InstanceId'];
-            $result = $this->ec2->createTags(['Resources' => [$instanceId], 'Tags' => [['Key' => 'Name', 'Value' => $name],['Key' => 'AMI-Builder', 'Value' => 'true'],]]);
-        } catch(Aws\Ec2\Exception\Ec2Exception $e) {
+            $result = $this->ec2->createTags(['Resources' => [$instanceId], 'Tags' => [['Key' => 'Name', 'Value' => $name], ['Key' => 'AMI-Builder', 'Value' => 'true']]]);
+        } catch (Aws\Ec2\Exception\Ec2Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
         }
@@ -181,7 +181,7 @@ class Ec2 implements FactoryInterface
         }
         return true;
     }
-    
+
     public function getLastError()
     {
         return $this->lastError;

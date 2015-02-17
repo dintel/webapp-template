@@ -59,8 +59,11 @@ return array(
         'factories' => array(
             'mail'     => 'Application\Mail\MailFactory',
             'mongodb'  => 'Application\Mongodb\MongodbFactory',
-            'mapper'   => 'Application\Model\Mapper',
+            'mapper'   => 'MongoObject\MapperFactory',
         ),
+    ),
+    'mongoObjectMapper' => array(
+        'modelsNamespace' => 'Application\Model',
     ),
     'translator' => array(
         'locale' => 'en_US',

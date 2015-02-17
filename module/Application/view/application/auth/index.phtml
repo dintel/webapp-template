@@ -215,7 +215,7 @@ function prepareSaveUser() {
     if($("#password").val() != "") {
         user.password = $("#password").val();
     }
-    
+
     this.button.dataButton("setParams",{user: user});
     return true;
 }
@@ -231,7 +231,7 @@ function toggleUserUpdate(user) {
     var rowUser = row.data("user");
     rowUser.active = user.active;
     row.data("user",rowUser);
-    
+
     if(user.active) {
         button.removeClass("btn-danger").addClass("btn-success").text("Active");
     } else {

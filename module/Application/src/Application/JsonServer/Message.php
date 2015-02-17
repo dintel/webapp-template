@@ -13,8 +13,8 @@ class Message implements IteratorAggregate
     const TYPE_ERROR="error";
 
     private $data;
-    
-    public function __construct($type,$text)
+
+    public function __construct($type, $text)
     {
         $this->data['type'] = $type;
         $this->data['text'] = $text;
@@ -22,24 +22,24 @@ class Message implements IteratorAggregate
 
     public static function success($text)
     {
-        return new Message(Message::TYPE_SUCCESS,$text);
+        return new Message(Message::TYPE_SUCCESS, $text);
     }
 
     public static function info($text)
     {
-        return new Message(Message::TYPE_INFO,$text);
+        return new Message(Message::TYPE_INFO, $text);
     }
 
     public static function warning($text)
     {
-        return new Message(Message::TYPE_WARNING,$text);
+        return new Message(Message::TYPE_WARNING, $text);
     }
 
     public static function error($text)
     {
-        return new Message(Message::TYPE_ERROR,$text);
+        return new Message(Message::TYPE_ERROR, $text);
     }
-    
+
     public function getIterator()
     {
         return new ArrayIterator($this->data);

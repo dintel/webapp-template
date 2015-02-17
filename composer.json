@@ -12,6 +12,6 @@
         "php": ">=5.5",
         "zendframework/zendframework": "2.3.*",
         "aws/aws-sdk-php": "*",
-        "ccampbell/chromephp": "dev-master"
+        "dintel/mongo-object": "0.1.*"
     }
 }
