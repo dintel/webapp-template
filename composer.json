@@ -10,8 +10,7 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.5",
-        "zendframework/zendframework": "2.3.*",
-        "aws/aws-sdk-php": "*",
+        "zendframework/zendframework": "2.4.*",
         "dintel/mongo-object": "0.1.*"
     }
 }
