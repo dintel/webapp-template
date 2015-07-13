@@ -44,10 +44,12 @@ class Mongo implements AdapterInterface
     {
         $hash = hash('sha512', $this->password);
         $user = $this->collection->findOne(['login' => $this->login, 'password' => $hash]);
-        if ($user === null)
+        if ($user === null) {
             return new Result(Result::FAILURE, null, ['Invalid login and/or bad password']);
-        if (@!$user['active'])
+        }
+        if (@!$user['active']) {
             return new Result(Result::FAILURE, null, ['Account is suspended']);
+        }
         return new Result(Result::SUCCESS, $user);
     }
 }

@@ -2,7 +2,7 @@
   <h1>Users</h1>
 </div>
 
-<input type="hidden" id="toggleUrl" value="<?=$this->url('application/default',['controller'=>'auth','action'=>'toggle'])?>" />
+<input type="hidden" id="toggleUrl" value="<?=$this->url('application/default', ['controller'=>'auth', 'action'=>'toggle'])?>" />
 
 <style>
 table#usersTbl td:nth-child(1) {
@@ -17,7 +17,7 @@ table#usersTbl td:nth-child(5) {
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <table class="table table-striped table-bordered table-condensed" id="usersTbl" data-table data-url="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'list'])?>" data-method="list" data-table-convert-row-func="convertUserRow" data-checkbox-class="userCheckbox">
+    <table class="table table-striped table-bordered table-condensed" id="usersTbl" data-table data-url="<?=$this->url('application/default', ['controller' => 'auth', 'action' => 'list'])?>" data-method="list" data-table-convert-row-func="convertUserRow" data-checkbox-class="userCheckbox">
       <thead>
         <tr>
           <th></th>
@@ -54,7 +54,7 @@ table#usersTbl td:nth-child(5) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" id="deleteConfirmBtn" data-button data-url="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'delete'])?>" data-params="{}" data-callback="refreshUsersTable"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+        <button type="button" class="btn btn-danger" id="deleteConfirmBtn" data-button data-url="<?=$this->url('application/default', ['controller' => 'auth', 'action' => 'delete'])?>" data-params="{}" data-callback="refreshUsersTable"><i class="glyphicon glyphicon-trash"></i> Delete</button>
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@ table#usersTbl td:nth-child(5) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-confirm-button data-button data-url="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'save'])?>" data-params="{}" data-callback="refreshUsersTable" data-prepare="prepareSaveUser"><i class="glyphicon glyphicon-check"></i> Save</button>
+        <button type="button" class="btn btn-primary" data-confirm-button data-button data-url="<?=$this->url('application/default', ['controller' => 'auth', 'action' => 'save'])?>" data-params="{}" data-callback="refreshUsersTable" data-prepare="prepareSaveUser"><i class="glyphicon glyphicon-check"></i> Save</button>
       </div>
     </div>
   </div>

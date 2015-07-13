@@ -27,8 +27,8 @@
                     ->prependFile($this->basePath() . '/js/jquery.bootstrap-growl.min.js')
                     ->prependFile($this->basePath() . '/js/bootstrap.min.js')
                     ->prependFile($this->basePath() . '/js/jquery.min.js')
-                    ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                    ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); 
+                    ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9', ))
+                    ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9', ));
     ?>
   </head>
   <body>
@@ -43,23 +43,23 @@
           <a class="navbar-brand" href="<?= $this->url('home') ?>"><i class="glyphicon glyphicon-home"></i> Template</a>
         </div>
         <div class="collapse navbar-collapse">
-          <?php if(isset($this->user)) { ?>
-          <ul class="nav navbar-nav">
-            <li class="<?=$this->controller == 'some' ? 'active':''?>"><a href="<?=$this->url('application/default',['controller' => 'some', 'action' => 'index'])?>"><i class="glyphicon glyphicon-time"></i> Some module</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><p class="navbar-text">Hello, <?=$this->user['name']?></p></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> System <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'index'])?>"><i class="glyphicon glyphicon-user"></i> Users management</a></li>
-                <li class="divider"></li>
-                <li><a href="<?=$this->url('application/default',['controller' => 'index', 'action' => 'stats'])?>"><i class="glyphicon glyphicon-stats"></i> Stats</a></li>
-              </ul>
-            </li>
-            <li><a href="<?=$this->url('application/default',['controller' => 'auth', 'action' => 'logout'])?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
-          </ul>
-          <?php } ?>
+          <?php if (isset($this->user)): ?>
+            <ul class="nav navbar-nav">
+              <li class="<?=$this->controller == 'some' ? 'active':''?>"><a href="<?=$this->url('application/default', ['controller' => 'some', 'action' => 'index'])?>"><i class="glyphicon glyphicon-time"></i> Some module</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><p class="navbar-text">Hello, <?=$this->user['name']?></p></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> System <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=$this->url('application/default', ['controller' => 'auth', 'action' => 'index'])?>"><i class="glyphicon glyphicon-user"></i> Users management</a></li>
+                  <li class="divider"></li>
+                  <li><a href="<?=$this->url('application/default', ['controller' => 'index', 'action' => 'stats'])?>"><i class="glyphicon glyphicon-stats"></i> Stats</a></li>
+                </ul>
+              </li>
+              <li><a href="<?=$this->url('application/default', ['controller' => 'auth', 'action' => 'logout'])?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+            </ul>
+          <?php endif; ?>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

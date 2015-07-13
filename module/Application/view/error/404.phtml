@@ -1,11 +1,11 @@
-<h1><?php echo $this->translate('A 404 error occurred') ?></h1>
-<h2><?php echo $this->message ?></h2>
+<h1><?php echo $this->translate('A 404 error occurred'); ?></h1>
+<h2><?php echo $this->message; ?></h2>
 
 <?php if (isset($this->reason) && $this->reason): ?>
 
 <?php
 $reasonMessage= '';
-switch ($this->reason) {
+switch ($this->reason):
     case 'error-controller-cannot-dispatch':
         $reasonMessage = $this->translate('The requested controller was unable to dispatch the request.');
         break;
@@ -21,26 +21,26 @@ switch ($this->reason) {
     default:
         $reasonMessage = $this->translate('We cannot determine at this time why a 404 was generated.');
         break;
-}
+endswitch;
 ?>
 
 <p><?php echo $reasonMessage ?></p>
 
-<?php endif ?>
+<?php endif; ?>
 
 <?php if (isset($this->controller) && $this->controller): ?>
 
 <dl>
     <dt><?php echo $this->translate('Controller') ?>:</dt>
     <dd><?php echo $this->escapeHtml($this->controller) ?>
-<?php
-if (isset($this->controller_class)
-    && $this->controller_class
-    && $this->controller_class != $this->controller
-) {
-    echo '(' . sprintf($this->translate('resolves to %s'), $this->escapeHtml($this->controller_class)) . ')';
-}
-?>
+      <?php
+        if (isset($this->controller_class)
+            && $this->controller_class
+            && $this->controller_class != $this->controller
+        ) {
+            echo '(' . sprintf('resolves to %s', $this->escapeHtml($this->controller_class)) . ')';
+        }
+      ?>
 </dd>
 </dl>
 
@@ -48,7 +48,7 @@ if (isset($this->controller_class)
 
 <?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
 
-<?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
+<?php if (isset($this->exception) && $this->exception instanceof Exception): ?>
 <hr/>
 <h2><?php echo $this->translate('Additional information') ?>:</h2>
 <h3><?php echo get_class($this->exception); ?></h3>
@@ -73,7 +73,7 @@ if (isset($this->controller_class)
 <hr/>
 <h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
 <ul class="unstyled">
-    <?php while($e) : ?>
+    <?php while ($e): ?>
     <li>
         <h3><?php echo get_class($e); ?></h3>
         <dl>

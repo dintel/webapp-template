@@ -69,7 +69,7 @@ class AuthController extends AbstractActionController
 
     public function listAction()
     {
-        $users = $this->mapper->fetchObjects('users' ,'User', [], ['login' => 1]);
+        $users = $this->mapper->fetchObjects('users', 'User', [], ['login' => 1]);
         return JsonResponse::model($users);
     }
 
@@ -90,7 +90,7 @@ class AuthController extends AbstractActionController
             return JsonResponse::model(null, JsonMessage::error("Login length is less than ".self::MIN_LOGIN_LENGTH));
         }
 
-        if ($data['name'] === "" ) {
+        if ($data['name'] === "") {
             return JsonResponse::model(null, JsonMessage::error("Name must not be empty"));
         }
 
@@ -108,7 +108,7 @@ class AuthController extends AbstractActionController
 
         if (!isset($data['id'])) {
             $user = $this->mapper->findObjectByAttr("users", "User", "login", $data['login']);
-            if($user !== null) {
+            if ($user !== null) {
                 return JsonResponse::model(null, JsonMessage::error("User with such login already exists"));
             }
             $user = $this->mapper->newObject('users', 'User', $data);
@@ -197,7 +197,8 @@ class AuthController extends AbstractActionController
         return new ViewModel(['user' => $user, 'password' => $password]);
     }
 
-    private static function randomPassword($length = 12) {
+    private static function randomPassword($length = 12)
+    {
         $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
