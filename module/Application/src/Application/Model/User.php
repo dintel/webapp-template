@@ -11,7 +11,7 @@ class User extends Object
     const TYPE_ADMIN='admin';
     const TYPE_USER='user';
 
-    public function __construct(array $data, MongoCollection $collection)
+    public function __construct(array $data, MongoCollection $collection, $namespace)
     {
         $schema = [
             '_id' => ['type' => Object::TYPE_ID, 'null' => false],
@@ -25,6 +25,6 @@ class User extends Object
         $defaults = [
             'active' => true,
         ];
-        parent::__construct($schema, $data + $defaults, $collection);
+        parent::__construct($schema, $data + $defaults, $collection, $namespace);
     }
 }

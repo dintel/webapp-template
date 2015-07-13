@@ -32,7 +32,6 @@ class AuthController extends AbstractActionController
     protected function init()
     {
         $this->mapper = $this->getServiceLocator()->get('mapper');
-        $this->mongodb = $this->getServiceLocator()->get('mongodb');
     }
 
     public function indexAction()
@@ -192,7 +191,7 @@ class AuthController extends AbstractActionController
             'password' => hash('sha512', $password),
             'active' => true,
         ];
-        $user = new User($data, $this->mongodb->users);
+        $user = $this->mapper->newObject('users', 'User', $data);
         $user->save();
 
         return new ViewModel(['user' => $user, 'password' => $password]);
