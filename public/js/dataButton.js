@@ -35,6 +35,7 @@
             var button = this;
             var options = this.data("options");
             var params = {};
+            var controls = $(":input:enabled");
 
             options.button = button;
 
@@ -49,7 +50,9 @@
                     }
                 }
 
+                controls.attr('disabled', true);
                 $.post(options.url,params,function(json){
+                    controls.attr('disabled', false);
                     if('message' in json) {
                         msg(json.message.type,json.message.text);
                     }
@@ -62,6 +65,7 @@
                     var err = "Request Failed: " + textStatus + ", " + error;
                     console.error(err);
                     msg("error",err);
+                    controls.attr('disabled', false);
                 });
             }
 
